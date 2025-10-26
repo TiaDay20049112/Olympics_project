@@ -1,27 +1,42 @@
+"""
+Paris Olympics 2024 Dashboard
+Author: Tia Day
+This is the main file that starts the app
+"""
+
+# Import what we need
 import dash
 from dash import Dash, html, dcc
-import dash_bootstrap_components as dbc
-import plotly.express as px
 
-app = Dash(__name__, use_pages= True, external_stylesheets=['game_style.css', dbc.themes.SPACELAB ])
+# Create the app
+app = Dash(__name__, use_pages=True)
 
-links = []
-for page in dash.page_registry.values():
-    links.append( dcc.Link(page['name'] + "       ", href=page['path']))
-
-# Layout goes here
-
+# Make the page layout
 app.layout = html.Div([
-    html.H1(["Paris Olympics 2024" ]),
-    html.Div( dbc.Row(links)),
+    
+    # Title at top
+    html.H1("Paris 2024 Olympics Dashboard"),
+    
+    # Links to navigate between pages
+    html.Div([
+        dcc.Link("Home", href="/"),
+        html.Span(" | "),
+        dcc.Link("Events", href="/events"),
+        html.Span(" | "),
+        dcc.Link("Athletes", href="/athletes"),
+        html.Span(" | "),
+        dcc.Link("Venues", href="/venues")
+    ]),
+    
     html.Hr(),
-
-    # contents of each page goes here
+    
+    # This is where the page content shows
     dash.page_container,
-    html.Hr(),
-    html.Footer( 'brought to you by Sports4ALL ')
-
+    
+    # Footer
+    html.Footer("Sports4All Pvt Ltd")
 ])
 
+# Run the app
 if __name__ == '__main__':
     app.run(debug=True)
